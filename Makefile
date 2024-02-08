@@ -1,14 +1,16 @@
 CFLAGS = -std=c++17 -O2
 LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
-vulkan: main.cpp
-	clang++ $(CFLAGS) -o vulkan main.cpp $(LDFLAGS)
+.PHONY: all clean
 
-.PHONY: test clean
+all: triangle compute
 
-test: vulkan
-	./vulkan
+triangle: main.cpp
+	clang++ $(CFLAGS) -o triangle main.cpp $(LDFLAGS)
+
+compute: compute_shader.cpp
+	clang++ $(CFLAGS) -o compute compute_shader.cpp $(LDFLAGS)
+
 clean:
-	rm -f vulkan
-
+	rm -f triangle compute
 
